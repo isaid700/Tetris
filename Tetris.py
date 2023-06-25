@@ -189,7 +189,7 @@ def get_shape(): #pick one of the blocks to drop
     return Piece(5, 0, random.choice(shapes))
 
 def draw_text_middle(surface, text, size, color):
-    font = pygame.font.SysFont("comicsans", size, bold=True)
+    font = pygame.font.SysFont("agencyFB", size, bold=True)
     label = font.render(text, 1, color)
 
     surface.blit(
@@ -239,13 +239,15 @@ def clear_rows(grid, locked):
             x, y = key
             if y < ind:
                 newKey = (x, y + inc)
-                locked[newKey] = locked.pop(key)
-
+                while new_key[1] <= len(grid) - 1 and new_key not in locked:
+                    locked[new_key] = locked.pop(key)
+                    key = new_key
+                    new_key = (x, new_key[1] + 1)
     return inc
 
 
 def draw_next_shape(shape, surface):
-    font = pygame.font.SysFont("comicsans", 30)
+    font = pygame.font.SysFont("agencyFB", 30)
     label = font.render("Next Shape", 1, (255, 255, 255))
 
     sx = top_left_x + play_width + 50
@@ -292,13 +294,13 @@ def draw_window(surface, grid, score=0, last_score=0):
     surface.fill((0, 0, 0))
 
     pygame.font.init()
-    font = pygame.font.SysFont("comicsans", 60)
+    font = pygame.font.SysFont("agencyFB", 60)
     label = font.render("Tetris", 1, (255, 255, 255))
 
     surface.blit(label, (top_left_x + play_width / 2 - (label.get_width() / 2), 30))
 
     # current score
-    font = pygame.font.SysFont("comicsans", 30)
+    font = pygame.font.SysFont("agencyFB", 30)
     label = font.render("High Score: " + last_score, 1, (255, 255, 255))
 
     sx = top_left_x + play_width - 10
@@ -307,7 +309,7 @@ def draw_window(surface, grid, score=0, last_score=0):
     surface.blit(label, (sx + 20, sy + 160))
 
     # last score
-    font = pygame.font.SysFont("comicsans", 30)
+    font = pygame.font.SysFont("agencyFB", 30)
     label = font.render("Score: " + str(score), 1, (255, 255, 255))
 
     sx = top_left_x - 200
